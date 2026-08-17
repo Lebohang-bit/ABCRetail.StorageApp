@@ -1,0 +1,54 @@
+@model IEnumerable<ABCRetail.StorageApp.Web.Models.ProductInventory>
+
+@{
+    ViewData["Title"] = "Products - ABC Retail";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="gold-text"><i class="fas fa-box"></i> Products</h2>
+    <a href="/Products/Create" class="btn btn-gold">
+        <i class="fas fa-plus-circle"></i> Add Product
+    </a>
+</div>
+
+@if (Model != null && Model.Any())
+{
+    <div class="row">
+        @foreach (var product in Model)
+        {
+            <div class="col-md-4 col-lg-3 mb-4">
+                <div class="card" style="height: 100%;">
+                    @if (!string.IsNullOrEmpty(product.ImageUrl))
+                    {
+                        <img src="@product.ImageUrl" class="card-img-top" alt="@product.ProductName" style="height: 200px; object-fit: cover;">
+                    }
+                    else
+                    {
+                        <div class="image-placeholder" style="height: 200px; background: #f8f9fa; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-image" style="font-size: 3rem; color: #ddd;"></i>
+                        </div>
+                    }
+                    <div class="card-body">
+                        <h5 class="card-title gold-text">@product.ProductName</h5>
+                        <p class="text-muted-gold small">@product.Category</p>
+                        <p class="gold-text" style="font-size: 1.3rem; font-weight: 700;">R @product.Price.ToString("F2")</p>
+                        <p class="text-muted-gold small">
+                            <i class="fas fa-boxes"></i> Stock: @product.StockQuantity
+                        </p>
+                        <a href="/Products/Edit/@product.RowKey" class="btn btn-outline-gold btn-sm w-100">
+                            <i class="fas fa-edit"></i> Edit
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div class="card text-center py-5">
+        <i class="fas fa-box fa-4x d-block mb-3 text-muted-gold" style="opacity: 0.3;"></i>
+        <h4 class="text-muted-gold">No products found</h4>
+        <p class="text-muted-gold">Click <a href="/Products/Create" class="gold-text">Add Product</a> to get started</p>
+    </div>
+}

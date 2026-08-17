@@ -1,0 +1,85 @@
+@model ABCRetail.StorageApp.Web.Models.ProductInventory
+@inject ABCRetail.StorageApp.Web.Services.IAzureBlobService _blobService
+
+@{
+    ViewData["Title"] = "Edit Product - ABC Retail";
+}
+
+<h2 class="gold-text mb-4"><i class="fas fa-edit"></i> Edit Product</h2>
+
+<div class="card" style="max-width: 700px;">
+    <form asp-action="Edit" method="post" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="RowKey" />
+        <input type="hidden" asp-for="PartitionKey" />
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label asp-for="ProductName" class="form-label">Product Name *</label>
+                    <input asp-for="ProductName" class="form-control" required />
+                    <span asp-validation-for="ProductName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label asp-for="Category" class="form-label">Category *</label>
+                    <input asp-for="Category" class="form-control" required />
+                    <span asp-validation-for="Category" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label asp-for="Price" class="form-label">Price (R) *</label>
+                    <input asp-for="Price" class="form-control" step="0.01" required />
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label asp-for="StockQuantity" class="form-label">Stock Quantity *</label>
+                    <input asp-for="StockQuantity" class="form-control" type="number" required />
+                    <span asp-validation-for="StockQuantity" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Description" class="form-label">Description</label>
+            <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+
+        @if (!string.IsNullOrEmpty(Model.ImageUrl))
+        {
+            <div class="mb-3">
+                <label class="form-label">Current Image</label>
+                <div>
+                    <img src="@_blobService.GetImageUrl(Model.ImageUrl)" alt="Product Image" style="max-height: 150px; border-radius: 8px; border: 1px solid rgba(212,168,75,0.2);" />
+                </div>
+            </div>
+        }
+
+        <div class="mb-3">
+            <label class="form-label">Change Image</label>
+            <input type="file" name="imageFile" class="form-control" accept="image/*" />
+            <small class="text-muted-gold"><i class="fas fa-info-circle"></i> Upload a new image to replace the current one</small>
+        </div>
+
+        <hr class="hr-gold" />
+
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-gold">
+                <i class="fas fa-save"></i> Update Product
+            </button>
+            <a href="/Products" class="btn btn-outline-gold">Cancel</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

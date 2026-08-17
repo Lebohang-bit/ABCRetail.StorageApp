@@ -1,0 +1,51 @@
+@model ABCRetail.StorageApp.Web.Models.CustomerProfile
+
+@{
+    ViewData["Title"] = "Customer Details - ABC Retail";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="gold-text"><i class="fas fa-user"></i> Customer Details</h2>
+    <a href="/Customers" class="btn btn-outline-gold">
+        <i class="fas fa-arrow-left"></i> Back to Customers
+    </a>
+</div>
+
+<div class="card" style="max-width: 700px;">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label class="form-label">Full Name</label>
+                <p class="text-light" style="font-size: 1.1rem;">@Model.FullName</p>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                <p class="text-light">@Model.Email</p>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Phone</label>
+                <p class="text-light">@Model.Phone</p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label class="form-label">Loyalty Tier</label>
+                <p><span class="badge badge-gold">@Model.LoyaltyTier</span></p>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Customer ID</label>
+                <p class="text-muted-gold" style="font-size: 0.85rem;">@Model.CustomerId</p>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Registered</label>
+                <p class="text-muted-gold">@Model.RegistrationDate?.ToString("MMMM dd, yyyy HH:mm")</p>
+            </div>
+        </div>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Shipping Address</label>
+        <p class="text-light" style="white-space: pre-wrap;">@Model.ShippingAddress</p>
+    </div>
+    <hr class="hr-gold" />
+    <a href="/Customers" class="btn btn-outline-gold">Back to List</a>
+</div>

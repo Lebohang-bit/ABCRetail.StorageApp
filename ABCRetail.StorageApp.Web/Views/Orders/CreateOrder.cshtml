@@ -1,0 +1,101 @@
+@model ABCRetail.StorageApp.Web.Models.OrderMessage
+
+@{
+    ViewData["Title"] = "Create Order - ABC Retail";
+}
+
+<h2 class="gold-text mb-4"><i class="fas fa-cart-plus"></i> Create New Order</h2>
+
+<div class="card" style="max-width: 800px;">
+    <form asp-action="CreateOrder" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label asp-for="CustomerId" class="form-label">Customer ID *</label>
+                    <input asp-for="CustomerId" class="form-control" placeholder="Enter customer ID" required />
+                    <span asp-validation-for="CustomerId" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label asp-for="CustomerName" class="form-label">Customer Name *</label>
+                    <input asp-for="CustomerName" class="form-control" placeholder="Enter customer name" required />
+                    <span asp-validation-for="CustomerName" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Order Items</label>
+            <div id="orderItems" class="mb-2">
+                <div class="order-item row g-2 mb-2">
+                    <div class="col-md-5">
+                        <input type="text" name="Items[0].ProductName" class="form-control" placeholder="Product name" />
+                    </div>
+                    <div class="col-md-3">
+                        <input type="number" name="Items[0].Quantity" class="form-control" placeholder="Qty" min="1" />
+                    </div>
+                    <div class="col-md-3">
+                        <input type="number" step="0.01" name="Items[0].UnitPrice" class="form-control" placeholder="Price" min="0" />
+                    </div>
+                    <div class="col-md-1">
+                        <button type="button" class="btn btn-danger btn-sm" onclick="this.parentElement.parentElement.remove()" style="width: 100%;">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <button type="button" class="btn btn-sm btn-outline-gold" onclick="addItem()">
+                <i class="fas fa-plus"></i> Add Item
+            </button>
+            <small class="text-muted-gold d-block mt-1"><i class="fas fa-info-circle"></i> Add at least one item</small>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="TotalAmount" class="form-label">Total Amount (R) *</label>
+            <input asp-for="TotalAmount" class="form-control" placeholder="0.00" step="0.01" required />
+            <span asp-validation-for="TotalAmount" class="text-danger"></span>
+        </div>
+
+        <hr class="hr-gold" />
+
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-gold">
+                <i class="fas fa-paper-plane"></i> Submit Order
+            </button>
+            <a href="/Orders" class="btn btn-outline-gold">Cancel</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        let itemIndex = 1;
+        function addItem() {
+            const container = document.getElementById('orderItems');
+            const div = document.createElement('div');
+            div.className = 'order-item row g-2 mb-2';
+            div.innerHTML = `
+                <div class="col-md-5">
+                    <input type="text" name="Items[${itemIndex}].ProductName" class="form-control" placeholder="Product name" />
+                </div>
+                <div class="col-md-3">
+                    <input type="number" name="Items[${itemIndex}].Quantity" class="form-control" placeholder="Qty" min="1" />
+                </div>
+                <div class="col-md-3">
+                    <input type="number" step="0.01" name="Items[${itemIndex}].UnitPrice" class="form-control" placeholder="Price" min="0" />
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-danger btn-sm" onclick="this.parentElement.parentElement.remove()" style="width: 100%;">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `;
+            container.appendChild(div);
+            itemIndex++;
+        }
+    </script>
+}

@@ -1,0 +1,72 @@
+@model ABCRetail.StorageApp.Web.Models.ProductInventory
+
+@{
+    ViewData["Title"] = "Add Product - ABC Retail";
+}
+
+<h2 class="gold-text mb-4"><i class="fas fa-plus-circle"></i> Add New Product</h2>
+
+<div class="card" style="max-width: 700px;">
+    <form asp-action="Create" method="post" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label asp-for="ProductName" class="form-label">Product Name *</label>
+                    <input asp-for="ProductName" class="form-control" placeholder="Enter product name" required />
+                    <span asp-validation-for="ProductName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label asp-for="Category" class="form-label">Category *</label>
+                    <input asp-for="Category" class="form-control" placeholder="Enter category" required />
+                    <span asp-validation-for="Category" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label asp-for="Price" class="form-label">Price (R) *</label>
+                    <input asp-for="Price" class="form-control" placeholder="0.00" step="0.01" required />
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label asp-for="StockQuantity" class="form-label">Stock Quantity *</label>
+                    <input asp-for="StockQuantity" class="form-control" placeholder="0" type="number" required />
+                    <span asp-validation-for="StockQuantity" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Description" class="form-label">Description</label>
+            <textarea asp-for="Description" class="form-control" rows="3" placeholder="Enter product description"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Product Image</label>
+            <input type="file" name="imageFile" class="form-control" accept="image/*" />
+            <small class="text-muted-gold"><i class="fas fa-info-circle"></i> Upload a product image (optional)</small>
+        </div>
+
+        <hr class="hr-gold" />
+
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-gold">
+                <i class="fas fa-save"></i> Save Product
+            </button>
+            <a href="/Products" class="btn btn-outline-gold">Cancel</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

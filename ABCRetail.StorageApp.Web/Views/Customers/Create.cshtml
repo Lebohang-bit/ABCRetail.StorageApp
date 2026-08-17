@@ -1,0 +1,60 @@
+@model ABCRetail.StorageApp.Web.Models.CustomerProfile
+
+@{
+    ViewData["Title"] = "Add Customer - ABC Retail";
+}
+
+<h2 class="gold-text mb-4"><i class="fas fa-user-plus"></i> Add New Customer</h2>
+
+<div class="card" style="max-width: 600px;">
+    <form asp-action="Create" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="mb-3">
+            <label asp-for="FullName" class="form-label">Full Name *</label>
+            <input asp-for="FullName" class="form-control" placeholder="Enter full name" required />
+            <span asp-validation-for="FullName" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Email" class="form-label">Email *</label>
+            <input asp-for="Email" class="form-control" placeholder="Enter email address" type="email" required />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Phone" class="form-label">Phone</label>
+            <input asp-for="Phone" class="form-control" placeholder="Enter phone number" />
+            <span asp-validation-for="Phone" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="ShippingAddress" class="form-label">Shipping Address</label>
+            <textarea asp-for="ShippingAddress" class="form-control" rows="3" placeholder="Enter shipping address"></textarea>
+            <span asp-validation-for="ShippingAddress" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="LoyaltyTier" class="form-label">Loyalty Tier</label>
+            <select asp-for="LoyaltyTier" class="form-control">
+                <option value="Bronze">Bronze</option>
+                <option value="Silver">Silver</option>
+                <option value="Gold">Gold</option>
+                <option value="Platinum">Platinum</option>
+            </select>
+        </div>
+
+        <hr class="hr-gold" />
+
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-gold">
+                <i class="fas fa-save"></i> Save Customer
+            </button>
+            <a href="/Customers" class="btn btn-outline-gold">Cancel</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

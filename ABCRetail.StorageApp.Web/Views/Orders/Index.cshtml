@@ -1,0 +1,56 @@
+@{
+    ViewData["Title"] = "Orders - ABC Retail";
+    var queueCount = ViewBag.QueueMessageCount ?? 0;
+}
+
+<h2 class="gold-text mb-4"><i class="fas fa-shopping-cart"></i> Order Processing</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card" style="text-align: center;">
+            <div class="card-header">
+                <i class="fas fa-clock"></i> Queue Status
+            </div>
+            <div class="py-4">
+                <div style="font-size: 4rem; font-weight: 700; color: #C9A84C;">
+                    @queueCount
+                </div>
+                <p class="text-muted-gold">Orders waiting in queue</p>
+                @if (queueCount > 0)
+                {
+                    <div class="alert alert-gold text-start">
+                        <i class="fas fa-info-circle"></i> There are <strong>@queueCount</strong> order(s) waiting to be processed.
+                    </div>
+                }
+                else
+                {
+                    <div class="text-muted-gold">
+                        <i class="fas fa-check-circle gold-text"></i> Queue is empty
+                    </div>
+                }
+                <form asp-action="ProcessNextOrder" method="post" class="mt-3">
+                    <button type="submit" class="btn btn-gold" @(queueCount == 0 ? "disabled" : "")>
+                        <i class="fas fa-play"></i> Process Next Order
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card" style="text-align: center;">
+            <div class="card-header">
+                <i class="fas fa-plus-circle"></i> New Order
+            </div>
+            <div class="py-4">
+                <p class="text-muted-gold">Create a new order and add it to the processing queue</p>
+                <div class="alert alert-gold text-start">
+                    <i class="fas fa-info-circle"></i> Orders are processed asynchronously using Azure Queue Storage
+                </div>
+                <a href="/Orders/CreateOrder" class="btn btn-gold mt-2">
+                    <i class="fas fa-cart-plus"></i> Create Order
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
